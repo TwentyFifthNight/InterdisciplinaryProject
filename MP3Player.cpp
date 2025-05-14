@@ -31,6 +31,10 @@ int MP3Player::getTrackCount() {
   return hexToInt(sendCommandWithResponse(CMD_QUERY_TOT_TRACKS));
 }
 
+int MP3Player::getPlayerStatus() {
+  return hexToInt(sendCommandWithResponse(CMD_QUERY_STATUS) & 0X00FF);
+}
+
 int MP3Player::hexToInt(int16_t hexValue) {
   return static_cast<int>(hexValue);
 }

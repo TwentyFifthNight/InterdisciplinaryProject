@@ -40,12 +40,21 @@ void setup() {
     Serial.println("Waking up.");
     mp3Player.wake();
     mp3Player.playFolderTrack(1, GPIOTrack[wakeUpGPIO]);
+    
+    delay(500);
+    int status = mp3Player.getPlayerStatus();
+    if(status != 1){
+      Serial.println("Player status: " + String(status));
+      Serial.println("Going to sleep.");
+      hibernate();
+    }
   }
 }
 
 void loop() {
   mp3Player.playerLoop();
   checkForVolumeChange();
+  checkForButtonClick();
   delay(100);
 }
 
@@ -56,6 +65,22 @@ void checkForVolumeChange(){
   if(newVolume != currentVolume){
     mp3Player.setVolume(newVolume);
     currentVolume = newVolume;
+  }
+}
+
+void checkForButtonClick() {
+  for(gpio_num_t gpio : wakeUpGPIOs) {
+    if(digitalRead(gpio) == HIGH) {
+      mp3Player.playFolderTrack(1, GPIOTrack[gpio]);
+      delay(500);
+
+      int status = mp3Player.getPlayerStatus();
+      if(status != 1){
+        Serial.println("Player status: " + String(status));
+        Serial.println("Going to sleep.");
+        hibernate();
+      }
+    }
   }
 }
 

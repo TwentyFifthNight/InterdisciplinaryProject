@@ -12,6 +12,7 @@
 #define CMD_RESET         0X0C
 #define CMD_PLAY_FOLDER_FILE 0X0F
 
+#define CMD_QUERY_STATUS      0x42
 #define CMD_QUERY_TOT_TRACKS  0x48
 
 #define DEV_TF            0X0002
@@ -49,6 +50,11 @@ class MP3Player {
     * @return number of available tracks.
     */
     int getTrackCount();
+
+    /**
+    * @return player status(0=stopped, 1=play, 2=paused).
+    */
+    int getPlayerStatus();
 
     /**
     * Sets the playback volume of the device.
