@@ -34,8 +34,7 @@ void setup() {
   int8_t wakeUpGPIO = getWakeUpGPIONumber();
   if(wakeUpGPIO == -1) {
     Serial.println("Going to sleep now.");
-    mp3Player.sleep();
-    hibernate();
+    sleep();
   } else {
     Serial.println("Waking up.");
     mp3Player.wake();
@@ -46,7 +45,7 @@ void setup() {
     if(status != 1){
       Serial.println("Player status: " + String(status));
       Serial.println("Going to sleep.");
-      hibernate();
+      sleep();
     }
   }
 }
@@ -78,7 +77,7 @@ void checkForButtonClick() {
       if(status != 1){
         Serial.println("Player status: " + String(status));
         Serial.println("Going to sleep.");
-        hibernate();
+        sleep();
       }
     }
   }
@@ -86,6 +85,10 @@ void checkForButtonClick() {
 
 void handleTrackEnded(){
   Serial.println("Going to sleep now.");
+  sleep();
+}
+
+void sleep() {
   mp3Player.sleep();
   hibernate();
 }
