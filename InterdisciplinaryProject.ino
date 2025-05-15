@@ -24,6 +24,7 @@ void setup() {
   hibernateSetup(wakeUpGPIOs, std::end(wakeUpGPIOs)-std::begin(wakeUpGPIOs));
 
   mp3Player = MP3Player(mp3Serial, ESP_RX, ESP_TX);
+  delay(1000);
 
   if(mp3Player.getTrackCount() < 3){
     Serial.println("Not enough tracks on the SD card.");

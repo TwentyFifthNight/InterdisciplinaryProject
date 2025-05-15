@@ -145,6 +145,8 @@ void MP3Player::handleMp3Answer() {
   {
     uint8_t b = mp3Serial->read();
     answerBuffer[i++] = b;
+    if(b == COMMAND_END)
+      break;
   }
 
   switch (answerBuffer[3]) {
@@ -163,6 +165,8 @@ void MP3Player::handleMp3Answer() {
       break;
     default:
       debugMessage("Unexpected answer from the player" + String(answerBuffer[3], HEX));
+      uint16_t response = (uint16_t)answerBuffer[5] << 8 | answerBuffer[6];
+      debugMessage(String(response));
       return;
   }
 }
