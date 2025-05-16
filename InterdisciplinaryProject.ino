@@ -23,7 +23,13 @@ void setup() {
 
   hibernateSetup(wakeUpGPIOs, std::end(wakeUpGPIOs)-std::begin(wakeUpGPIOs));
 
-  mp3Player = MP3Player(mp3Serial, ESP_RX, ESP_TX);
+  int8_t wakeUpGPIO = getWakeUpGPIONumber();
+
+  if(wakeUpGPIO == -1){
+    mp3Player = MP3Player(mp3Serial, ESP_RX, ESP_TX, true);
+  } else {
+    mp3Player = MP3Player(mp3Serial, ESP_RX, ESP_TX);
+  }
   delay(1000);
 
   if(mp3Player.getTrackCount() < 3){
@@ -32,7 +38,6 @@ void setup() {
 
   mp3Player.registerTrackEndedHandler(handleTrackEnded);
 
-  int8_t wakeUpGPIO = getWakeUpGPIONumber();
   if(wakeUpGPIO == -1) {
     Serial.println("Going to sleep now.");
     sleep();

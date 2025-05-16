@@ -2,12 +2,13 @@
 
 MP3Player::MP3Player(){}
 
-MP3Player::MP3Player(HardwareSerial& serial, int RX, int TX) {
+MP3Player::MP3Player(HardwareSerial& serial, int RX, int TX, bool resetDevice) {
   mp3Serial = &serial;
   mp3Serial->begin(9600, SERIAL_8N1, RX, TX);
   delay(500);
 
-  reset();
+  if(resetDevice)
+    reset();
   sendCommand(CMD_SEL_DEV, DEV_TF);
   delay(500);
 }

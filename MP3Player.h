@@ -28,7 +28,7 @@
 class MP3Player {
   public:
     MP3Player();
-    MP3Player(HardwareSerial& serial, int RX, int TX);
+    MP3Player(HardwareSerial& serial, int RX, int TX, bool resetDevice = false);
 
     /**
     * Execute the player loop.
